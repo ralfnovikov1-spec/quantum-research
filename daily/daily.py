@@ -72,14 +72,56 @@ def plan_day(hw, live, probe_id, cal_stale):
     return rec, pubs
 
 
+def _det_qubits(circ):
+    meas_q, out = [], []
+    for ins in circ.flattened():
+        if ins.name in ("M", "MR"):
+            meas_q += [t.value for t in ins.targets_copy()]
+        elif ins.name == "DETECTOR":
+            n = len(meas_q)
+            out.append(tuple(sorted({meas_q[n + t.value]
+                                     for t in ins.targets_copy()})))
+    return out
+
+
+def _spearman(a, b):
+    ra, rb = np.argsort(np.argsort(a)), np.argsort(np.argsort(b))
+    return float(np.corrcoef(ra, rb)[0, 1])
+
+
+def detector_drift(rec, det_rates):
+    """C3: per qubit-set mean (hardware - calibration-model) detector rate
+    vs probe readout drift (live - cal), Spearman + permutation p."""
+    import stim
+    grp = {}
+    for arm in rec["arms"]:
+        circ = stim.Circuit(arm["stim"])
+        mod = circ.compile_detector_sampler(seed=4).sample(40000).mean(0)
+        hw = det_rates[arm["k"]]
+        for j, qs in enumerate(_det_qubits(circ)):
+            grp.setdefault(qs, []).append(hw[j] - mod[j])
+    ex, dro = [], []
+    for qs, v in grp.items():
+        ex.append(float(np.mean(v)))
+        dro.append(max(rec["live"][str(q)]["ro"] - rec["cal"][str(q)]["ro"]
+                       for q in qs))
+    ex, dro = np.array(ex), np.array(dro)
+    rho = _spearman(ex, dro)
+    rng = np.random.default_rng(0)
+    perm = [_spearman(ex, rng.permutation(dro)) for _ in range(4000)]
+    return {"rho": rho, "p": float(np.mean(np.abs(perm) >= abs(rho))),
+            "n_sets": int(len(ex)), "mean_excess": float(ex.mean())}
+
+
 def analyze_day(res, rec):
     import pymatching, stim
-    G = {}
+    G, det_rates = {}, {}
     for arm in rec["arms"]:
         arr = H.bits(res, arm["k"])
         det = np.stack([np.logical_xor.reduce(arr[:, d], axis=1)
                         for d in arm["dets"]], axis=1)
         det ^= np.array(arm["ref_d"], bool)[None, :]
+        det_rates[arm["k"]] = det.mean(0)
         ob = np.logical_xor.reduce(arr[:, arm["obs"]], axis=1)
         ob ^= bool(arm["ref_o"])
         m = pymatching.Matching.from_detector_error_model(
@@ -103,6 +145,10 @@ def analyze_day(res, rec):
     out["model_err"] = {m: float(np.mean(v)) for m, v in err.items()}
     out["live_2x_better"] = bool(out["model_err"]["cal"]
                                  >= 2 * out["model_err"]["live"])
+    if "live" in rec and "cal" in rec:
+        out["c3"] = detector_drift(rec, det_rates)
+        out["c3"]["pass"] = bool(out["c3"]["rho"] > 0
+                                 and out["c3"]["p"] < 0.05)
     return out
 
 
@@ -177,16 +223,18 @@ def report(out_dir=HERE):
     n = len(rows)
     wins = sum(r["live_2x_better"] for _, r in rows)
     zsep = sum(r["sep"]["Z"] and r["gain"]["Z"] > 1 for _, r in rows)
+    c3 = sum(r.get("c3", {}).get("pass", False) for _, r in rows)
     lines = [
         "# Daily results (auto-generated, do not edit)", "",
         "Protocol: [PROTOCOL.md](PROTOCOL.md) - pre-registered claims C1, C2. "
         "Every row is one IBM hardware job; job IDs are in `data/`.", "",
         "| date | chip | excluded | live T1 < cal/2 | Z gain | X gain "
-        "| model error cal | model error live | live 2x better | job |",
-        "|---|---|---|---|---|---|---|---|---|---|"]
+        "| model error cal | model error live | live 2x better "
+        "| C3 rho (p) | job |",
+        "|---|---|---|---|---|---|---|---|---|---|---|"]
     for rec, r in rows:
         lines.append("| %s | %s | %d | %d | x%.2f%s | x%.2f%s | %.0f%% "
-                     "| %.0f%% | %s | `%s` |" % (
+                     "| %.0f%% | %s | %s | `%s` |" % (
                          rec["date"], rec["backend"], len(rec["excluded"]),
                          rec["stale_t1_half"],
                          r["gain"]["Z"], "" if r["sep"]["Z"] else "*",
@@ -194,6 +242,8 @@ def report(out_dir=HERE):
                          100 * r["model_err"]["cal"],
                          100 * r["model_err"]["live"],
                          "yes" if r["live_2x_better"] else "no",
+                         ("%+.2f (%.3f)" % (r["c3"]["rho"], r["c3"]["p"])
+                          if "c3" in r else "n/a"),
                          rec["job_id"]))
     lines += ["", "\\* = 2-sigma intervals overlap.", "",
               "## Running tally (decided only at %d days)" % MIN_DAYS, "",
@@ -201,11 +251,14 @@ def report(out_dir=HERE):
               "- C1 live model >= 2x more accurate: **%d / %d**"
               " (claim needs >= 80%% of days)" % (wins, n),
               "- C2 Z reset-free gain > 1, 2-sigma separated: **%d / %d**"
-              " (claim needs >= 80%% of days)" % (zsep, n)]
+              " (claim needs >= 80%% of days)" % (zsep, n),
+              "- C3 detector excess tracks readout drift (rho > 0, p < 0.05):"
+              " **%d / %d** (claim needs >= 60%% of days)" % (c3, n)]
     if n >= MIN_DAYS:
-        lines += ["", "**Verdicts:** C1 %s, C2 %s" % (
+        lines += ["", "**Verdicts:** C1 %s, C2 %s, C3 %s" % (
             "HOLDS" if wins >= 0.8 * n else "FAILS",
-            "HOLDS" if zsep >= 0.8 * n else "FAILS")]
+            "HOLDS" if zsep >= 0.8 * n else "FAILS",
+            "HOLDS" if c3 >= 0.6 * n else "FAILS")]
     else:
         lines += ["", "No verdict before %d days (pre-registered)." % MIN_DAYS]
     open(os.path.join(out_dir, "RESULTS.md"), "w", encoding="utf-8").write(

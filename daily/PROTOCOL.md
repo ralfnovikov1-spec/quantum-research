@@ -10,13 +10,21 @@ seconds-long live probe of every qubit fix it? Secondary: does reset-free syndro
 lowering the Z-basis error per round across days and chips?
 
 Motivation (disclosed): one day of data (15 Oct 2026, ibm_kingston) showed calibration-fed predictions
-1.5–2.1× too optimistic and probe-fed predictions within ±30%. That single day is **not** counted below.
+1.5–2.1× too optimistic and probe-fed predictions within ±30%. An exploratory per-detector analysis of the
+same day (`04_hardware_runs/detector_drift.py`) found the excess tracked readout drift (23 qubit sets,
+ρ = +0.54, permutation p = 0.009) but not T1 drift (ρ = +0.16, p = 0.46). That day is **not** counted
+below. C3 was defined after seeing it, which is why it is tested only on new days.
 
 ## Pre-registered claims (decided after ≥ 20 analysed days, not before)
 - **C1.** On at least 80% of analysed days, the calibration-fed model's mean relative prediction error is at
   least 2× the probe-fed model's.
 - **C2.** On at least 80% of analysed days, the reset-free Z arm's error per round is lower than baseline,
   with 2σ intervals separated.
+
+- **C3.** On at least 60% of analysed days, the per-qubit-set mean detector excess (hardware detection
+  rate minus calibration-model rate) correlates positively with the probe-measured readout drift
+  (live − calibration) of those qubits: Spearman ρ > 0 with permutation p < 0.05. The bar is 60%, not 80%,
+  because one day has only about 20–30 qubit sets, which limits per-day power.
 
 Each claim gets HOLDS or FAILS. If a claim fails, it is reported as failed.
 
@@ -42,4 +50,6 @@ Open-plan budget (600 s/month) limits days per month. Matching decoder only. d =
 not independent of IBM's recalibration schedule, which is not controlled.
 
 ## Change log
-- v1, 15 Oct 2026: initial protocol.
+- v1, 15 Oct 2026: initial protocol (C1, C2).
+- v1, 15 Oct 2026, before the first data point: added C3 and the per-day probe and calibration snapshot.
+  No daily data existed when this was committed.

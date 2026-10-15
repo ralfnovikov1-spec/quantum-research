@@ -16,6 +16,7 @@ from IBM and re-analysed with independent code ([`04_hardware_runs/INDEPENDENT_R
 | The same holds on a second chip | ×1.07 / ×1.05 on `ibm_marrakesh`, inside 2σ | **Not supported** (direction only) |
 | Break-even (logical outlives best physical qubit) | Logical/physical lifetime 0.096× (Z), 0.136× (X), pre-registered | **Not reached** |
 | A live probe of every qubit makes the noise model accurate | Probe-fed model within ±30% in 4/4 arms; calibration-fed model 1.5–2.1× optimistic | **Supported** (one day, one chip) |
+| Detectors that err more than the calibration model sit on qubits whose readout drifted since calibration | 23 qubit sets: ρ = +0.54, 95% CI [+0.17, +0.80], permutation p = 0.009; no effect for T1 drift (p = 0.46) | **Exploratory** (one day, analysis chosen after the data); pre-registered as C3 in the daily study |
 | Larger codes help (Λ > 1) | Only d = 3 was run on hardware; simulation gives Λ < 1 | **Not tested on hardware** |
 
 The full list of 21 pre-registered predictions, including the 8 that failed, is in the
@@ -29,8 +30,8 @@ hardware measurement, not a new theory. No full literature review has been done.
 
 A GitHub Action ([`.github/workflows/daily.yml`](.github/workflows/daily.yml)) runs every day at 06:17 UTC.
 It probes the chip of the day, runs baseline and reset-free arms on IBM hardware, decodes the previous day's
-job, and updates [`daily/RESULTS.md`](daily/RESULTS.md). Claims C1 (calibration staleness) and C2 (reset-free
-gain) were pre-registered in [`daily/PROTOCOL.md`](daily/PROTOCOL.md) before the first data point. They are
+job, and updates [`daily/RESULTS.md`](daily/RESULTS.md). Claims C1 (calibration staleness), C2 (reset-free
+gain) and C3 (detector excess tracks readout drift) were pre-registered in [`daily/PROTOCOL.md`](daily/PROTOCOL.md) before the first data point. They are
 decided only after 20 analysed days.
 
 ## Layout
