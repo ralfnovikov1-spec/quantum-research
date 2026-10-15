@@ -5,7 +5,7 @@ Data: 15 Oct 2026 rerun (job db88kdgr1c5c738lveeg) + its live probe
 (db88jo6r6oqs7388vrs0) + IBM calibration as of the job time.
     IBM_QUANTUM_KEY=... python detector_drift.py <dir with rerun_plan + probe json>
 """
-import datetime, glob, json, os, sys
+import glob, json, os, sys
 import numpy as np, stim
 from qiskit_ibm_runtime import QiskitRuntimeService
 

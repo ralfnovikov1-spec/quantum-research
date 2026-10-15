@@ -1,5 +1,4 @@
 import numpy as np
-from scipy.linalg import expm
 
 def run(L, eps, h, J=1.0, n_cycles=30, seed=42, theta_mode='cell7'):
     dim = 2**L

@@ -29,7 +29,7 @@ code{font-size:9pt}
 subsystem code (d=3) lowered the Z-basis logical error per round by ×1.66–2.07 on ibm_kingston in four
 runs, every one 2σ-separated, including a clean pre-registered rerun on 15 October (×1.72, 10,000 shots).
 The X-basis gain is smaller (×1.13–1.42). On ibm_marrakesh the direction held but was not significant.
-Break-even is not reached: the logical qubit lives 0.096× (Z) and 0.136× (X) as long as the best usable physical qubit in the clean test.
+Break-even is not reached: the logical qubit lives 0.092× (Z) and 0.136× (X) as long as the best usable physical qubit in the clean test (lifetimes defined in section 3).
 <b>What changed from the 14 October report:</b> six pre-registered predictions that failed are now shown as
 failures. The 14 October break-even pass was obtained post hoc and is now labelled that way; the 15 October
 rerun tested it cleanly. The scaling (Λ) claim is restricted to simulation.</div>
@@ -42,7 +42,7 @@ rerun tested it cleanly. The scaling (Λ) claim is restricted to simulation.</di
 <tr><td>3</td><td>"Bigger code helps (Λ&gt;1): never, sim or hardware"</td><td>No d=5 heavy-hex job was ever run on hardware.</td><td>Λ&lt;1 is a simulation result only.</td></tr>
 <tr><td>4</td><td>Best error 3.3% per round (no source)</td><td>Probe-placement run 1 (job db7rid8r…): 3.33% [2.74, 3.92]. Best tabulated compression arm: 3.67% [3.34, 4.00].</td><td>Source added; the wide interval is stated.</td></tr>
 <tr><td>5</td><td>Shot counts for the compression runs not stated</td><td>5,000 shots per circuit (H11, R16, H18, H21, H25). The DD job used 10,000.</td><td>Stated.</td></tr>
-<tr><td>6</td><td>Stale calibration "16–24 of 156 qubits"</td><td>Two probes printed 24 and 16; the third printed no count. The 15 Oct probe found 8.</td><td>Counts per probe.</td></tr>
+<tr><td>6</td><td>Stale calibration "16–24 of 156 qubits"</td><td>Two probes printed 24 and 16; the third printed no count. The 15 Oct probe (Qmem3 cell R5) found 8.</td><td>Counts per probe.</td></tr>
 <tr><td>7</td><td>DD table "error per round", 14–20%</td><td>Computed as 1−(1−p)<sup>1/3</sup> with p capped at 0.4999; 3-round errors reached ≈50% (saturated). This is a different definition from the ε fit F=A(1−2ε)<sup>r</sup> used elsewhere, and the cap truncates one interval: 20.53% [20.01, 20.62].</td><td>Raw data: without DD the 3-round logical error was 45–50% (X Qiskit 49.8%, near a coin flip), with DD 37–43%. DD lowers the error in 4 of 4 arms (significant at 10,000 shots), but the arms were saturated, so the ×1.21–1.27 size is not meaningful and is withdrawn.</td></tr>
 <tr><td>8</td><td>"Model predicted the X gain closely"</td><td>Holds for run 1 only (×1.45–1.48 predicted vs ×1.42). Runs 2–3: ×1.26, ×1.21.</td><td>Scoped to run 1.</td></tr>
 </table>
@@ -50,12 +50,12 @@ rerun tested it cleanly. The scaling (Λ) claim is restricted to simulation.</di
 <h2>2. Every pre-registered prediction, 14–15 October</h2>
 <table>
 <tr><th>#</th><th>Prediction</th><th>Result</th><th>Verdict</th></tr>
-<tr><td>P1</td><td>Tournament placement beats Qiskit (Marrakesh, DD off/on, both bases)</td><td>×1.04–1.09, 4/4</td><td class="ok">HOLDS</td></tr>
+<tr><td>P1</td><td>Tournament placement beats Qiskit (Marrakesh, DD off/on, both bases)</td><td>4/4 lower (direction only: same saturated per-round metric as item 7)</td><td class="ok">HOLDS</td></tr>
 <tr><td>P2</td><td>X–X DD lowers error (Marrakesh)</td><td>4/4 lower; magnitude not meaningful (saturated, item 7)</td><td class="ok">HOLDS</td></tr>
 <tr><td>P3</td><td>Best Z ≤ 6% per round (DD job)</td><td>14.22% (saturated metric, see item 7)</td><td class="bad">FAILS</td></tr>
 <tr><td>P4</td><td>Staggered DD beats uniform DD</td><td>2 of 4</td><td class="bad">FAILS</td></tr>
 <tr><td>P5</td><td>Tournament beats Qiskit in ≥3 of 4 (Kingston)</td><td>3 of 4</td><td class="ok">HOLDS</td></tr>
-<tr><td>P6</td><td>Best Z ε ≤ 6% per round (IBM 2022 level)</td><td>7.48%</td><td class="bad">FAILS</td></tr>
+<tr><td>P6</td><td>Best Z ε ≤ 6% per round</td><td>7.48%</td><td class="bad">FAILS</td></tr>
 <tr><td>P7, P8</td><td>Compression beats baseline in both bases; Z gain ≥ ×1.3, X ≥ ×1.2 (Kingston run 1)</td><td>Z ×1.70, X ×1.42, separated</td><td class="ok">HOLDS</td></tr>
 <tr><td>P9</td><td>Kingston replication, 2σ separated</td><td>Z ×1.66, X ×1.26</td><td class="ok">HOLDS</td></tr>
 <tr><td>P10</td><td>New placement beats earlier, both bases</td><td>Z ×0.92, X ×1.18, overlapping</td><td class="bad">FAILS</td></tr>
@@ -67,10 +67,10 @@ rerun tested it cleanly. The scaling (Λ) claim is restricted to simulation.</di
 <tr><td>P16</td><td>Break-even ratio 0.15–0.6×, both bases</td><td>Z 0.00× (dead q146 chosen), X 0.18×</td><td class="bad">FAILS</td></tr>
 <tr><td colspan="4" class="m">15 October clean rerun (job db88kdgr1c5c738lveeg) — pre-registered 08:09:25 UTC, sha256 6d92b8ad…</td></tr>
 <tr><td>P17</td><td>Compression beats baseline, both bases, 2σ separated, 10,000 shots</td><td>Z ×1.72, X ×1.13</td><td class="ok">HOLDS</td></tr>
-<tr><td>P18</td><td>Break-even not reached (upper 2σ bound &lt; 1)</td><td>Z 0.096× (≤0.106), X 0.136× (≤0.149)</td><td class="ok">HOLDS</td></tr>
-<tr><td>P19</td><td>Ratio inside 0.10–0.35 in both bases</td><td>Z 0.096×</td><td class="bad">FAILS</td></tr>
+<tr><td>P18</td><td>Break-even not reached (upper 2σ bound &lt; 1)</td><td>Z 0.096× (≤0.106) as computed; 0.092× with the exact DD model. X 0.136× (≤0.149)</td><td class="ok">HOLDS</td></tr>
+<tr><td>P19</td><td>Ratio inside 0.10–0.35 in both bases</td><td>Z 0.096× (0.092× exact model)</td><td class="bad">FAILS</td></tr>
 <tr><td>P20</td><td>No reference qubit errs &gt;10% at its shortest wait</td><td>1.2–6.0%</td><td class="ok">HOLDS</td></tr>
-<tr><td>P21</td><td>Live-probe model within ±30% (4 arms)</td><td>all 4 within</td><td class="ok">HOLDS</td></tr>
+<tr><td>P21</td><td>Live-probe model within ±30% (4 arms)</td><td>all 4 within. Caveat: the probe prediction was decoded with its own model, while the hardware data was decoded with the calibration model (found in code review; fixed for the daily study).</td><td class="ok">HOLDS</td></tr>
 </table>
 <p class="m">Definitions and verdicts are quoted from the printed output of Qmem2 and Qmem3.</p>
 
@@ -91,13 +91,22 @@ qubits with the longest probe T1 (Z) or T2 (X), idled with X–X DD for 7–400 
 </table>
 <table>
 <tr><th>Basis</th><th>Logical lifetime (µs)</th><th>Best physical (µs)</th><th>Ratio (upper bound)</th></tr>
-<tr><td>Z</td><td>50 [48, 53]</td><td>q155: 524 [505, 544]</td><td>0.096× (0.106×)</td></tr>
+<tr><td>Z</td><td>50 [48, 53]</td><td>q155: 524 [505, 544] symmetric fit; T1 543 [522, 565] exact DD model</td><td>0.096× (0.106×); 0.092× exact model</td></tr>
 <tr><td>X</td><td>60 [57, 63]</td><td>q32 / q149: 440</td><td>0.136× (0.149×)</td></tr>
 </table>
 <p>The calibration-fed model was again optimistic, by a factor of 1.5–2.1. The probe-fed model stayed within
 ±30% in all four arms. Physical lifetimes now have ±4% bands, because the waits reach 400 µs; on 14 October
 they stopped at ≈29 µs.</p>
 
+<h3>Lifetime definitions and a re-check</h3>
+<p>The logical lifetime τ<sub>L</sub> is defined by 1 − 2p<sub>L</sub>(t) = A·exp(−t/τ<sub>L</sub>). Physical
+references idled under the same X–X DD (pulses at ¼ and ¾ of each wait). Z references start in |1⟩: the
+qubit sits in |1⟩ only half the time, so 1 − 2P(0) decays close to exponentially, and the symmetric fit
+recovers T1 within about 5%. A code review raised the concern that a |1⟩ reference decays towards
+P(0) = 1, which would make the symmetric fit report about 0.4 T1. That is true without DD, but not for this
+sequence. Fitting the exact pulse-sequence model to the raw data (<code>recompute_breakeven.py</code>) gives
+T1 = 543 µs [522, 565] for q155. So the corrected Z ratio is <b>0.092×</b>, against 0.096× from the
+pre-registered code. P18 holds and P19 fails under both.</p>
 <h2>4. Compression gain across all hardware runs</h2>
 <table>
 <tr><th>Run</th><th>Chip</th><th>Shots</th><th>Z gain</th><th>X gain</th><th>2σ separated</th></tr>
@@ -113,7 +122,7 @@ they stopped at ≈29 µs.</p>
 <ul>
 <li><b>Stands:</b> dropping resets (flags kept in X) lowers Z-basis logical error by about ×1.7 on Kingston,
 replicated four times. X–X DD lowers the error (4/4 on Marrakesh, direction only; arms were near saturation). The calibration-fed model is optimistic and a
-seconds-long live probe fixes most of that. Break-even is far away: 0.096× (Z) and 0.136× (X) in the clean test.</li>
+seconds-long live probe fixes most of that. Break-even is far away: 0.092× (Z) and 0.136× (X) in the clean test.</li>
 <li><b>Does not stand:</b> the 14 October break-even "pass" (post hoc); placement and judging methods
 predicting their own direction (P10, P13, P15 fail); "Λ&lt;1 on hardware" (never run at d=5); DD
 per-round values compared with compression ε.</li>
@@ -126,7 +135,7 @@ decoder; Ramsey vs echo to explain the DD gain.</li>
 fitting code (<code>04_hardware_runs/INDEPENDENT_REDERIVATION.json</code>). IBM's job records confirm the
 backend (ibm_kingston or ibm_marrakesh), the creation time (14 Oct 19:14–20:57 EEST; 15 Oct 11:09 EEST), status DONE,
 and the shot count (5,000 per circuit, or 10,000 for the DD job and the 15 Oct rerun). Every ε in sections 1–4 was
-reproduced to two decimals. QPU time per job (IBM-reported): 19–47 s on 14 Oct; 99 s for the rerun.</p>
+reproduced to two decimals, including all 8 arms of the DD-type job db7qqker (P6: 7.48%, Z tournament / staggered DD). An earlier version of the re-derivation merged the uniform-DD and staggered-DD arms of that job; this was fixed. QPU time per job (IBM-reported): 19–47 s on 14 Oct; 99 s for the rerun.</p>
 <h2>7. Reproducibility</h2>
 <p>Notebooks: Qmem2 (14 Oct record, untouched) and Qmem3 (15 Oct rerun). Code: <code>hhmem.py</code> and
 <code>hhmem2.py</code>, which adds the probe, dead-qubit filter, pre-registration and verdicts. Dry run

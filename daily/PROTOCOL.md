@@ -31,7 +31,7 @@ Each claim gets HOLDS or FAILS. If a claim fails, it is reported as failed.
 ## Fixed design
 - **Chip:** `ibm_kingston` and `ibm_marrakesh` alternate by day (`date.toordinal() % 2`). Queue-induced
   delays are allowed; one job per chip-day.
-- **Probe:** 3 circuits × 3000 shots on all qubits. Readout, T1 from decay over 20 µs, and echo T2.
+- **Probe:** 3 circuits × 3000 shots on all qubits. Readout from prepare-|0⟩/|1⟩ measurements. T1 is a two-point estimate from a single 20 µs wait (about 6% decay at T1 ≈ 300 µs, so per-qubit T1 is noisy). Echo T2 comes from one 20 µs echo, and the code caps it at 2·T1, so the probe does not test the T2 ≤ 2·T1 bound.
 - **Unusable qubit:** mean readout > 10%, either one-sided readout > 15%, or T1 not identifiable or > 2 ms.
   Excluded before placement.
 - **Placement:** zero-SWAP, calibration-scored, top-8 by Stim simulation (`hhmem2.place_filtered`).
@@ -53,3 +53,12 @@ not independent of IBM's recalibration schedule, which is not controlled.
 - v1, 15 Oct 2026: initial protocol (C1, C2).
 - v1, 15 Oct 2026, before the first data point: added C3 and the per-day probe and calibration snapshot.
   No daily data existed when this was committed.
+- **v2, 15 Oct 2026, after an independent code review and before any daily result was collected:**
+  (a) The probe-fed prediction is now decoded with the calibration model, the same decoder applied to the
+  hardware data. Previously it used its own model, which assumed a better-informed decoder. Day 1
+  (2026-10-15, job db8a5aer…) was planned under v1, so it is **excluded from C1**; C1 needs 20 v2 days.
+  C2 and C3 are unaffected.
+  (b) C3 uses average ranks for ties.
+  (c) Robustness: a day already planned is never resubmitted; plans are written before submission; the
+  budget guard fails closed; analysis errors are recorded per day instead of stopping the run; results
+  are committed even when a later step fails.

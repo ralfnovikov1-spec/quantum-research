@@ -9,7 +9,6 @@ import os, sys, time
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path[:0] = [HERE, os.path.join(HERE, "..", "03_code_hhmem"),
                 os.path.join(HERE, "..", "daily")]
-import numpy as np                                     # noqa: E402
 from fake_ibm import _simulate, _Truth                 # noqa: E402
 from qiskit_ibm_runtime.fake_provider import FakeKingston  # noqa: E402
 import noisespec as N                                  # noqa: E402
@@ -23,6 +22,6 @@ fits = N.analyse(res, index, qubits)
 print("circuits", len(circs), "| %.0fs" % (time.time() - t))
 for q in qubits[:4]:
     print(" q%-3d" % q, {s: tuple(round(x, 2) for x in fits[q][s])
-                         for s in N.SEQS})
+                         for s in N.FITTED})
 for k, (ok, txt) in N.verdicts(fits).items():
     print(k, "HOLDS" if ok else "FAILS", "-", txt)

@@ -2,7 +2,7 @@
 stored raw results. Own bit parsing, own fits; only the decoder model
 (the arm's stored Stim circuit -> DEM -> PyMatching) is shared, because it
 IS the definition of the experiment. Key from env IBM_QUANTUM_KEY. No QPU time: only job.result() / metadata of finished jobs."""
-import glob, json, os, re, sys
+import glob, json, os, sys
 import numpy as np, stim, pymatching
 from qiskit_ibm_runtime import QiskitRuntimeService
 
@@ -80,8 +80,10 @@ for fn in plans:
             continue
         p = decode(bitarray(res[k]), arm)
         R = arm.get("rounds", rec.get("rounds"))
-        grp = arm.get("variant") or "%s/%s" % (arm.get("layout_name"),
-                                               "DD" if arm.get("dd") else "noDD")
+        dd = arm.get("dd")             # False / True / "xx" / "stag"
+        dd = ("DD-" + dd if isinstance(dd, str) else
+              "DD" if dd else "noDD")
+        grp = arm.get("variant") or "%s/%s" % (arm.get("layout_name"), dd)
         G.setdefault((arm["basis"], grp), []).append((R, p))
     N = shots_actual[0]
     for (b, g), pts in sorted(G.items()):

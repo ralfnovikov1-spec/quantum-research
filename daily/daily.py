@@ -25,7 +25,7 @@ CHIPS = ("ibm_kingston", "ibm_marrakesh")     # alternate by day of year
 ROUNDS = (1, 2, 3)
 SHOTS = 4000
 RESERVE_S = 60          # never spend the last 60 s of the monthly budget
-PROTOCOL_VERSION = 1
+PROTOCOL_VERSION = 2
 
 
 def chip_of_day(day=None):
@@ -57,7 +57,7 @@ def plan_day(hw, live, probe_id, cal_stale):
                 arm.update(variant=v, k=len(pubs))
                 lc = isa_to_stim(isa, lchip, arm["dets"], {0: arm["obs"]})
                 arm["pred_cal"] = logical_error(circ, 30000, seed=9)
-                arm["pred_live"] = logical_error(lc, 30000, seed=9)
+                arm["pred_live"] = H.pred_with_decoder(lc, circ, 30000, 9)
                 rec["arms"].append(arm)
                 pubs.append(isa)
     for b in ("Z", "X"):
@@ -85,8 +85,10 @@ def _det_qubits(circ):
 
 
 def _spearman(a, b):
-    ra, rb = np.argsort(np.argsort(a)), np.argsort(np.argsort(b))
-    return float(np.corrcoef(ra, rb)[0, 1])
+    """Spearman rho with average ranks for ties (tied readout drift is
+    common: qubit sets that share their worst qubit)."""
+    from scipy.stats import rankdata
+    return float(np.corrcoef(rankdata(a), rankdata(b))[0, 1])
 
 
 def detector_drift(rec, det_rates):
@@ -129,7 +131,7 @@ def analyze_day(res, rec):
         p = float(np.mean(m.decode_batch(det)[:, 0].astype(bool) != ob))
         G.setdefault(arm["basis"] + "_" + arm["variant"], []).append(
             (arm["rounds"], p))
-    out = {"eps": {}, "gain": {}, "sep": {}}
+    out = {"eps": {}, "gain": {}, "sep": {}, "worse": {}}
     for k, rows in G.items():
         rows.sort()
         out["eps"][k] = [float(x) for x in slope_fit(
@@ -137,9 +139,10 @@ def analyze_day(res, rec):
     for b in ("Z", "X"):
         eb, ec = out["eps"][b + "_baseline"], out["eps"][b + "_compressed"]
         out["gain"][b] = eb[0] / ec[0]
-        out["sep"][b] = bool(ec[2] < eb[1])
+        out["sep"][b] = bool(ec[2] < eb[1])      # reset-free better, 2-sigma
+        out["worse"][b] = bool(eb[2] < ec[1])    # reset-free worse, 2-sigma
     err = {"cal": [], "live": []}
-    for k, (e, lo, hi) in out["eps"].items():
+    for k, (e, _lo, _hi) in out["eps"].items():
         for m in ("cal", "live"):
             err[m].append(abs(rec["pred"][k][m] - e) / e)
     out["model_err"] = {m: float(np.mean(v)) for m, v in err.items()}
@@ -157,7 +160,12 @@ def collect(service):
     n = 0
     for fn in sorted(glob.glob(os.path.join(DATA, "*_plan.json"))):
         rec = json.load(open(fn))
-        if "result" in rec or "job_id" not in rec:
+        if "result" in rec:
+            continue
+        if "job_id" not in rec:
+            if rec.get("date") != datetime.date.today().isoformat():
+                rec["result"] = {"failed": "never submitted"}
+                json.dump(rec, open(fn, "w"), default=str)
             continue
         job = service.job(rec["job_id"])
         st = str(job.status()).upper()
@@ -167,13 +175,19 @@ def collect(service):
                 rec["result"] = {"failed": st}
                 json.dump(rec, open(fn, "w"), default=str)
             continue
-        rec["result"] = analyze_day(job.result(), rec)
+        try:
+            rec["result"] = analyze_day(job.result(), rec)
+        except Exception as e:                 # recorded, never silent
+            rec["result"] = {"failed": "analysis error: %r" % (e,)}
+            json.dump(rec, open(fn, "w"), default=str)
+            print("analysis failed", rec["job_id"], e)
+            continue
         try:
             rec["qpu_s"] = job.usage()
         except Exception:
             pass
         json.dump(rec, open(fn, "w"), default=str)
-        print("collected", rec["job_id"], rec["result"]["gain"])
+        print("collected", rec["job_id"], rec["result"].get("gain"))
         n += 1
     return n
 
@@ -187,15 +201,19 @@ def submit(service, sampler_cls):
     if pending():
         print("a job is still pending - not submitting")
         return None
+    today = datetime.date.today().isoformat()
+    if glob.glob(os.path.join(DATA, today + "_*_plan.json")):
+        print("today already has a plan - not submitting twice")
+        return None
     try:
-        u = service.usage()
-        left = u.get("usage_remaining_seconds")
-        print("IBM budget left:", left, "s")
-        if left is not None and left < RESERVE_S:
-            print("budget below reserve - skipping today")
-            return None
+        left = service.usage().get("usage_remaining_seconds")
     except Exception as e:
-        print("usage unavailable:", e)
+        print("usage unavailable - not submitting (fail closed):", e)
+        return None
+    print("IBM budget left:", left, "s")
+    if left is None or left < RESERVE_S:
+        print("budget unknown or below reserve - skipping today")
+        return None
     hw = service.backend(chip_of_day())
     pcs, w = H.probe_circuits(hw)
     pj = sampler_cls(mode=hw).run(pcs, shots=H.PROBE_SHOTS)
@@ -203,10 +221,11 @@ def submit(service, sampler_cls):
     cal = H.ChipNoise(hw)
     stale = sum(live[q]["t1"] < cal.t1(q) / 2 for q in live)
     rec, pubs = plan_day(hw, live, pj.job_id(), stale)
-    job = sampler_cls(mode=hw).run(pubs, shots=SHOTS)
-    rec["job_id"] = job.job_id()
     os.makedirs(DATA, exist_ok=True)
     fn = os.path.join(DATA, "%s_%s_plan.json" % (rec["date"], hw.name))
+    json.dump(rec, open(fn, "w"), default=str)    # predictions on disk first
+    job = sampler_cls(mode=hw).run(pubs, shots=SHOTS)
+    rec["job_id"] = job.job_id()
     json.dump(rec, open(fn, "w"), default=str)
     print("submitted", rec["job_id"], "->", os.path.basename(fn))
     return fn
@@ -221,7 +240,8 @@ def report(out_dir=HERE):
             continue
         rows.append((rec, r))
     n = len(rows)
-    wins = sum(r["live_2x_better"] for _, r in rows)
+    v2 = [(rec, r) for rec, r in rows if rec.get("protocol", 1) >= 2]
+    wins = sum(r["live_2x_better"] for _, r in v2)
     zsep = sum(r["sep"]["Z"] and r["gain"]["Z"] > 1 for _, r in rows)
     c3 = sum(r.get("c3", {}).get("pass", False) for _, r in rows)
     lines = [
@@ -237,26 +257,29 @@ def report(out_dir=HERE):
                      "| %.0f%% | %s | %s | `%s` |" % (
                          rec["date"], rec["backend"], len(rec["excluded"]),
                          rec["stale_t1_half"],
-                         r["gain"]["Z"], "" if r["sep"]["Z"] else "*",
-                         r["gain"]["X"], "" if r["sep"]["X"] else "*",
+                         r["gain"]["Z"], _mark(r, "Z"),
+                         r["gain"]["X"], _mark(r, "X"),
                          100 * r["model_err"]["cal"],
                          100 * r["model_err"]["live"],
-                         "yes" if r["live_2x_better"] else "no",
+                         ("yes" if r["live_2x_better"] else "no")
+                         if rec.get("protocol", 1) >= 2 else "v1 (not counted)",
                          ("%+.2f (%.3f)" % (r["c3"]["rho"], r["c3"]["p"])
                           if "c3" in r else "n/a"),
                          rec["job_id"]))
-    lines += ["", "\\* = 2-sigma intervals overlap.", "",
+    lines += ["", "\\* = 2-sigma intervals overlap; (worse) = reset-free "
+              "significantly worse.", "",
               "## Running tally (decided only at %d days)" % MIN_DAYS, "",
               "- days analysed: **%d**" % n,
-              "- C1 live model >= 2x more accurate: **%d / %d**"
-              " (claim needs >= 80%% of days)" % (wins, n),
+              "- C1 live model >= 2x more accurate: **%d / %d** protocol-v2"
+              " days (claim needs >= 80%%)" % (wins, len(v2)),
               "- C2 Z reset-free gain > 1, 2-sigma separated: **%d / %d**"
               " (claim needs >= 80%% of days)" % (zsep, n),
               "- C3 detector excess tracks readout drift (rho > 0, p < 0.05):"
               " **%d / %d** (claim needs >= 60%% of days)" % (c3, n)]
     if n >= MIN_DAYS:
         lines += ["", "**Verdicts:** C1 %s, C2 %s, C3 %s" % (
-            "HOLDS" if wins >= 0.8 * n else "FAILS",
+            ("HOLDS" if wins >= 0.8 * len(v2) else "FAILS")
+            if len(v2) >= MIN_DAYS else "pending (needs %d v2 days)" % MIN_DAYS,
             "HOLDS" if zsep >= 0.8 * n else "FAILS",
             "HOLDS" if c3 >= 0.6 * n else "FAILS")]
     else:
@@ -267,6 +290,12 @@ def report(out_dir=HERE):
 
 
 MIN_DAYS = 20
+
+
+def _mark(r, b):
+    if r["sep"][b]:
+        return ""
+    return " (worse)" if r.get("worse", {}).get(b) else "*"
 
 
 def ibm_key():

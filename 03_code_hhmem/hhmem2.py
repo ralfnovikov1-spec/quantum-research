@@ -42,6 +42,17 @@ RATIO_RANGE = (0.10, 0.35)
 MODEL_TOL = 0.30
 
 
+def pred_with_decoder(sample_circ, decode_circ, shots, seed):
+    """Logical error when shots come from sample_circ (e.g. probe noise) but
+    are decoded with decode_circ's model - exactly what happens to hardware
+    data, which is always decoded with the calibration model. (The 15 Oct
+    rerun's P21 used the probe circuit's own model; see the corrected report.)"""
+    m = pymatching.Matching.from_detector_error_model(dem_of(decode_circ))
+    det, ob = sample_circ.compile_detector_sampler(seed=seed).sample(
+        shots, separate_observables=True)
+    return float(np.mean(np.any(m.decode_batch(det) != ob, axis=1)))
+
+
 def bits(res, k):
     """Bit array (shots x clbits), clbit 0 in column 0."""
     bs = res[k].data.c.get_bitstrings()
@@ -215,7 +226,7 @@ def build_plan(hw, live, probe_job=None):
                 lc = isa_to_stim(isa, lchip, arm["dets"],
                                  {0: arm["obs"]})
                 arm["pred_cal"] = logical_error(circ, 30000, seed=9)
-                arm["pred_live"] = logical_error(lc, 30000, seed=9)
+                arm["pred_live"] = pred_with_decoder(lc, circ, 30000, 9)
                 rec["arms"].append(arm)
                 pubs.append(isa)
         key = 0 if basis == "Z" else 1   # Z: T1 ranks, X: echo T2
@@ -275,10 +286,16 @@ def preregister(rec, folder):
 # analysis
 # ------------------------------------------------------------------
 def tau_fit(ts_us, ps, N):
-    """Lifetime (us) and 2-sigma range from F(t) = A (1 - 2e)^t."""
+    """Lifetime (us) and 2-sigma range from F(t) = A (1 - 2e)^t.
+
+    Valid for errors that saturate at 1/2: logical qubits, |+> references,
+    and |1> references idled with this module's X-X DD (pulses at 1/4 and
+    3/4 of each wait). For the DD case it recovers T1 within ~5% (checked
+    in 04_hardware_runs/recompute_breakeven.py). It is NOT valid for a |1>
+    reference idling without DD (error -> 1): there it returns ~0.4 T1."""
     e, lo, hi = slope_fit(ts_us, ps, N)
-    f = lambda x: -1 / np.log(max(1 - 2 * x, 1e-12))
-    return f(e), f(hi), f(lo)
+    f = lambda x: (-1 / np.log(1 - 2 * x)) if 0 < x < 0.5 else float("inf")
+    return f(e), f(hi), f(lo)      # lo <= 0 -> upper lifetime bound = inf
 
 
 def analyze(res, rec):
@@ -337,7 +354,7 @@ def analyze(res, rec):
     V["P18"], V["P19"] = bool(r18), bool(r19)
     V["P20"] = bool(all(v["ps"][0] <= 0.10 for v in out["phys"].values()))
     ok21 = True
-    for k, (e, lo, hi) in out["eps"].items():
+    for k, (e, _lo, _hi) in out["eps"].items():
         pl = rec["pred"][k]["live"]
         ok21 &= abs(pl - e) <= MODEL_TOL * e
     V["P21"] = bool(ok21)
