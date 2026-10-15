@@ -6,3 +6,4 @@ __pycache__/
 dry_out/
 *.env
 apikey*.json
+daily/_fake_data/

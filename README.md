@@ -25,6 +25,14 @@ Prior work: Gehér et al., *To reset, or not to reset* (arXiv:2408.00758) studie
 in simulation. IBM's 2022 heavy-hex experiment is arXiv:2203.07205. This repository adds a replicated
 hardware measurement, not a new theory. No full literature review has been done.
 
+## Live daily study (automated)
+
+A GitHub Action ([`.github/workflows/daily.yml`](.github/workflows/daily.yml)) runs every day at 06:17 UTC.
+It probes the chip of the day, runs baseline and reset-free arms on IBM hardware, decodes the previous day's
+job, and updates [`daily/RESULTS.md`](daily/RESULTS.md). Claims C1 (calibration staleness) and C2 (reset-free
+gain) were pre-registered in [`daily/PROTOCOL.md`](daily/PROTOCOL.md) before the first data point. They are
+decided only after 20 analysed days.
+
 ## Layout
 
 | Path | Content |
