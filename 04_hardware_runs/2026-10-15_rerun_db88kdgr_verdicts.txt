@@ -1,0 +1,29 @@
+DONE 185s
+status: QUEUED - waiting...
+job db88kdgr1c5c738lveeg | ibm_kingston | 10000 shots per circuit | pre-registered 2026-10-15T08:09:25+00:00
+
+error per round (plain matching, 2-sigma)   model cal / live
+  X_baseline     6.39% [ 6.06,  6.72]    4.17% /  7.01%
+  X_compressed   5.66% [ 5.36,  5.96]    3.57% /  5.18%
+  Z_baseline     8.03% [ 7.71,  8.36]    5.13% /  8.70%
+  Z_compressed   4.68% [ 4.43,  4.93]    2.21% /  3.97%
+  Z gain x1.72
+  X gain x1.13
+lifetimes (us, 2-sigma)
+  Z logical (compressed)      50 [48, 53]
+  Z physical q12            354 [341, 369]   err at 7 us: 4.8%
+  Z physical q153           406 [390, 424]   err at 7 us: 6.0%
+  Z physical q155           524 [505, 544]   err at 7 us: 1.6%
+  Z ratio 0.10x of break-even (upper bound 0.11x)
+  X logical (compressed)      60 [57, 63]
+  X physical q32            440 [424, 457]   err at 7 us: 2.5%
+  X physical q80            350 [339, 363]   err at 7 us: 2.1%
+  X physical q149           440 [425, 456]   err at 7 us: 1.2%
+  X ratio 0.14x of break-even (upper bound 0.15x)
+VERDICTS (every pre-registered prediction)
+  P17 HOLDS  - compressed eps < baseline eps in both bases, 2-sigma intervals separated (plain matching, 10000 shots)
+  P18 HOLDS  - break-even NOT reached in either basis: tau_logical / tau_physical upper 2-sigma bound < 1
+  P19 FAILS  - ratio tau_logical / tau_physical inside 0.10-0.35 in both bases
+  P20 HOLDS  - no physical reference qubit errs above 10% at its shortest wait (dead-qubit filter works)
+  P21 HOLDS  - live-probe model eps within +-30% of hardware for all 4 arms (rounds 1-4 fit)
+QPU seconds used by this job: 99

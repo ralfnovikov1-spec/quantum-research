@@ -1,0 +1,1108 @@
+{
+ "meta": [
+  {
+   "job": "db7r4per6oqs73885d10",
+   "file": "hh_hw11_db7r4per6oqs73885d10.json",
+   "backend_ibm": "ibm_kingston",
+   "backend_plan": "ibm_kingston",
+   "created": "2026-10-14 19:48:37.240500+03:00",
+   "status": "DONE",
+   "pubs": 16,
+   "shots_plan": 5000,
+   "shots_actual": [
+    5000
+   ],
+   "qpu_s": 25
+  },
+  {
+   "job": "db7rbner6oqs73885t8g",
+   "file": "hh_hw11_db7rbner6oqs73885t8g.json",
+   "backend_ibm": "ibm_marrakesh",
+   "backend_plan": "ibm_marrakesh",
+   "created": "2026-10-14 20:03:25.228704+03:00",
+   "status": "DONE",
+   "pubs": 16,
+   "shots_plan": 5000,
+   "shots_actual": [
+    5000
+   ],
+   "qpu_s": 26
+  },
+  {
+   "job": "db7rf1gr1c5c738l5ig0",
+   "file": "hh_hw18_db7rf1gr1c5c738l5ig0.json",
+   "backend_ibm": "ibm_kingston",
+   "backend_plan": "ibm_kingston",
+   "created": "2026-10-14 20:10:30.352842+03:00",
+   "status": "DONE",
+   "pubs": 18,
+   "shots_plan": 5000,
+   "shots_actual": [
+    5000
+   ],
+   "qpu_s": 27
+  },
+  {
+   "job": "db7rid8r1c5c738l5mtg",
+   "file": "hh_hw18_db7rid8r1c5c738l5mtg.json",
+   "backend_ibm": "ibm_kingston",
+   "backend_plan": "ibm_kingston",
+   "created": "2026-10-14 20:17:41.717984+03:00",
+   "status": "DONE",
+   "pubs": 12,
+   "shots_plan": 5000,
+   "shots_actual": [
+    5000
+   ],
+   "qpu_s": 19
+  },
+  {
+   "job": "db7s2daraffc73fb6320",
+   "file": "hh_hw18_db7s2daraffc73fb6320.json",
+   "backend_ibm": "ibm_kingston",
+   "backend_plan": "ibm_kingston",
+   "created": "2026-10-14 20:51:49.536247+03:00",
+   "status": "DONE",
+   "pubs": 24,
+   "shots_plan": 5000,
+   "shots_actual": [
+    5000
+   ],
+   "qpu_s": 36
+  },
+  {
+   "job": "db7s4t6r6oqs738874lg",
+   "file": "hh_hw25_db7s4t6r6oqs738874lg.json",
+   "backend_ibm": "ibm_kingston",
+   "backend_plan": "ibm_kingston",
+   "created": "2026-10-14 20:57:08.205138+03:00",
+   "status": "DONE",
+   "pubs": 24,
+   "shots_plan": 5000,
+   "shots_actual": [
+    5000
+   ],
+   "qpu_s": 35
+  },
+  {
+   "job": "db7qqker6oqs73884obg",
+   "file": "hh_hw7_db7qqker6oqs73884obg.json",
+   "backend_ibm": "ibm_kingston",
+   "backend_plan": "ibm_kingston",
+   "created": "2026-10-14 19:26:58.024243+03:00",
+   "status": "DONE",
+   "pubs": 32,
+   "shots_plan": 5000,
+   "shots_actual": [
+    5000
+   ],
+   "qpu_s": 47
+  },
+  {
+   "job": "db7qkveil99s73foma1g",
+   "file": "hh_hw_db7qkveil99s73foma1g.json",
+   "backend_ibm": "ibm_marrakesh",
+   "backend_plan": "ibm_marrakesh",
+   "created": "2026-10-14 19:14:53.886173+03:00",
+   "status": "DONE",
+   "pubs": 8,
+   "shots_plan": 10000,
+   "shots_actual": [
+    10000
+   ],
+   "qpu_s": 26
+  },
+  {
+   "job": "db88kdgr1c5c738lveeg",
+   "file": "rerun_plan_2026-10-15T080925+0000.json",
+   "backend_ibm": "ibm_kingston",
+   "backend_plan": "ibm_kingston",
+   "created": "2026-10-15 11:09:26.469136+03:00",
+   "status": "DONE",
+   "pubs": 30,
+   "shots_plan": 10000,
+   "shots_actual": [
+    10000
+   ],
+   "qpu_s": 99
+  }
+ ],
+ "rows": [
+  {
+   "job": "db7r4per6oqs73885d10",
+   "basis": "X",
+   "arm": "baseline",
+   "rounds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "pL": [
+    0.054,
+    0.1176,
+    0.194,
+    0.2488
+   ],
+   "eps": [
+    0.08469973974030454,
+    0.07927107474797074,
+    0.09005835867250273
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7r4per6oqs73885d10",
+   "basis": "X",
+   "arm": "compressed",
+   "rounds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "pL": [
+    0.049,
+    0.0922,
+    0.1498,
+    0.1952
+   ],
+   "eps": [
+    0.05954781452205932,
+    0.05483768424730795,
+    0.06420810830701795
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7r4per6oqs73885d10",
+   "basis": "Z",
+   "arm": "baseline",
+   "rounds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "pL": [
+    0.0412,
+    0.1352,
+    0.2196,
+    0.2722
+   ],
+   "eps": [
+    0.10558080069700049,
+    0.1001044212252521,
+    0.1109821837604103
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7r4per6oqs73885d10",
+   "basis": "Z",
+   "arm": "compressed",
+   "rounds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "pL": [
+    0.029,
+    0.0864,
+    0.1364,
+    0.1858
+   ],
+   "eps": [
+    0.062003730519779754,
+    0.05787709881376113,
+    0.06609184558440429
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7rbner6oqs73885t8g",
+   "basis": "X",
+   "arm": "baseline",
+   "rounds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "pL": [
+    0.2718,
+    0.3964,
+    0.4486,
+    0.4692
+   ],
+   "eps": [
+    0.26053310728319173,
+    0.23848925797571352,
+    0.2807187870618416
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7rbner6oqs73885t8g",
+   "basis": "X",
+   "arm": "compressed",
+   "rounds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "pL": [
+    0.1942,
+    0.3468,
+    0.4258,
+    0.4574
+   ],
+   "eps": [
+    0.2486770025732563,
+    0.23304389017051153,
+    0.2633946303910895
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7rbner6oqs73885t8g",
+   "basis": "Z",
+   "arm": "baseline",
+   "rounds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "pL": [
+    0.202,
+    0.2924,
+    0.3758,
+    0.388
+   ],
+   "eps": [
+    0.15206539546257786,
+    0.13977550163136798,
+    0.1639359910754088
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7rbner6oqs73885t8g",
+   "basis": "Z",
+   "arm": "compressed",
+   "rounds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "pL": [
+    0.1582,
+    0.271,
+    0.3286,
+    0.3656
+   ],
+   "eps": [
+    0.14160751041166492,
+    0.1316549215505582,
+    0.15129118289290527
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7rf1gr1c5c738l5ig0",
+   "basis": "X",
+   "arm": "baseline",
+   "rounds": [
+    1,
+    2,
+    3
+   ],
+   "pL": [
+    0.048,
+    0.1138,
+    0.1878
+   ],
+   "eps": [
+    0.0810065355441198,
+    0.07396651269535892,
+    0.08793022499846925
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7rf1gr1c5c738l5ig0",
+   "basis": "X",
+   "arm": "compressed",
+   "rounds": [
+    1,
+    2,
+    3
+   ],
+   "pL": [
+    0.034,
+    0.0944,
+    0.1462
+   ],
+   "eps": [
+    0.06445631444980127,
+    0.05848632198250692,
+    0.07034558278139141
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7rf1gr1c5c738l5ig0",
+   "basis": "X",
+   "arm": "compressed+new",
+   "rounds": [
+    1,
+    2,
+    3
+   ],
+   "pL": [
+    0.0446,
+    0.0928,
+    0.1398
+   ],
+   "eps": [
+    0.05477569534615856,
+    0.04853814853886673,
+    0.06092706213614163
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7rf1gr1c5c738l5ig0",
+   "basis": "Z",
+   "arm": "baseline",
+   "rounds": [
+    1,
+    2,
+    3
+   ],
+   "pL": [
+    0.044,
+    0.1242,
+    0.2204
+   ],
+   "eps": [
+    0.10112105519940084,
+    0.09375623145167744,
+    0.1083523615050504
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7rf1gr1c5c738l5ig0",
+   "basis": "Z",
+   "arm": "compressed",
+   "rounds": [
+    1,
+    2,
+    3
+   ],
+   "pL": [
+    0.0244,
+    0.0778,
+    0.137
+   ],
+   "eps": [
+    0.06105756543605273,
+    0.05560382808245584,
+    0.0664443732051897
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7rf1gr1c5c738l5ig0",
+   "basis": "Z",
+   "arm": "compressed+new",
+   "rounds": [
+    1,
+    2,
+    3
+   ],
+   "pL": [
+    0.0206,
+    0.0848,
+    0.1398
+   ],
+   "eps": [
+    0.0667041772048963,
+    0.06131279148421548,
+    0.07202930377913996
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7rid8r1c5c738l5mtg",
+   "basis": "X",
+   "arm": "calib-placed",
+   "rounds": [
+    1,
+    2,
+    3
+   ],
+   "pL": [
+    0.0426,
+    0.0968,
+    0.142
+   ],
+   "eps": [
+    0.05801882113168,
+    0.05181209640756679,
+    0.0641395921040473
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7rid8r1c5c738l5mtg",
+   "basis": "X",
+   "arm": "probe-placed",
+   "rounds": [
+    1,
+    2,
+    3
+   ],
+   "pL": [
+    0.0466,
+    0.0968,
+    0.1356
+   ],
+   "eps": [
+    0.05249423030413908,
+    0.04624333701144007,
+    0.05865901209667984
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7rid8r1c5c738l5mtg",
+   "basis": "Z",
+   "arm": "calib-placed",
+   "rounds": [
+    1,
+    2,
+    3
+   ],
+   "pL": [
+    0.0284,
+    0.0804,
+    0.1462
+   ],
+   "eps": [
+    0.0632833742783267,
+    0.057555055458310744,
+    0.06893752876013837
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7rid8r1c5c738l5mtg",
+   "basis": "Z",
+   "arm": "probe-placed",
+   "rounds": [
+    1,
+    2,
+    3
+   ],
+   "pL": [
+    0.0502,
+    0.083,
+    0.1072
+   ],
+   "eps": [
+    0.033302400471856175,
+    0.02736452459002775,
+    0.039165676854022835
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7s2daraffc73fb6320",
+   "basis": "X",
+   "arm": "baseline",
+   "rounds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "pL": [
+    0.0434,
+    0.0994,
+    0.1668,
+    0.218
+   ],
+   "eps": [
+    0.0722670524967084,
+    0.06743783532756314,
+    0.07704235524528835
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7s2daraffc73fb6320",
+   "basis": "X",
+   "arm": "compressed",
+   "rounds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "pL": [
+    0.0318,
+    0.0826,
+    0.1404,
+    0.1806
+   ],
+   "eps": [
+    0.05991664942495806,
+    0.05574750542894008,
+    0.06404666755928262
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7s2daraffc73fb6320",
+   "basis": "X",
+   "arm": "compressed+probe",
+   "rounds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "pL": [
+    0.047,
+    0.0908,
+    0.1254,
+    0.176
+   ],
+   "eps": [
+    0.049827847520026114,
+    0.04540174900286831,
+    0.05421085227683475
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7s2daraffc73fb6320",
+   "basis": "Z",
+   "arm": "baseline",
+   "rounds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "pL": [
+    0.032,
+    0.0898,
+    0.1674,
+    0.22
+   ],
+   "eps": [
+    0.07605710040579428,
+    0.07147449144118867,
+    0.08059070340808716
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7s2daraffc73fb6320",
+   "basis": "Z",
+   "arm": "compressed",
+   "rounds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "pL": [
+    0.0224,
+    0.046,
+    0.0908,
+    0.124
+   ],
+   "eps": [
+    0.03668602889738759,
+    0.03338126675895475,
+    0.0399673855186099
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7s2daraffc73fb6320",
+   "basis": "Z",
+   "arm": "compressed+probe",
+   "rounds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "pL": [
+    0.0234,
+    0.0568,
+    0.1024,
+    0.1358
+   ],
+   "eps": [
+    0.04228812895188022,
+    0.038817841501094796,
+    0.04573230330446976
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7s4t6r6oqs738874lg",
+   "basis": "X",
+   "arm": "calib-placed",
+   "rounds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "pL": [
+    0.0412,
+    0.0744,
+    0.1246,
+    0.154
+   ],
+   "eps": [
+    0.045296415172233595,
+    0.04117390863018561,
+    0.04938188140530858
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7s4t6r6oqs738874lg",
+   "basis": "X",
+   "arm": "live-judged",
+   "rounds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "pL": [
+    0.0336,
+    0.0862,
+    0.1302,
+    0.179
+   ],
+   "eps": [
+    0.056986089208308555,
+    0.05282662095230145,
+    0.061106867379030205
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7s4t6r6oqs738874lg",
+   "basis": "Z",
+   "arm": "calib-placed",
+   "rounds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "pL": [
+    0.0286,
+    0.07,
+    0.107,
+    0.1496
+   ],
+   "eps": [
+    0.04553452843286887,
+    0.041808416109741675,
+    0.04923033921067593
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7s4t6r6oqs738874lg",
+   "basis": "Z",
+   "arm": "live-judged",
+   "rounds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "pL": [
+    0.0172,
+    0.047,
+    0.0822,
+    0.1246
+   ],
+   "eps": [
+    0.03728675628759376,
+    0.03416315136158504,
+    0.04038941631033366
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7qqker6oqs73884obg",
+   "basis": "X",
+   "arm": "qiskit/DD",
+   "rounds": [
+    1,
+    1,
+    2,
+    2,
+    3,
+    3,
+    4,
+    4
+   ],
+   "pL": [
+    0.0444,
+    0.047,
+    0.1118,
+    0.1128,
+    0.1758,
+    0.1774,
+    0.2194,
+    0.2284
+   ],
+   "eps": [
+    0.07668019738728404,
+    0.07317474426789028,
+    0.0801568607352029
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7qqker6oqs73884obg",
+   "basis": "X",
+   "arm": "tournament/DD",
+   "rounds": [
+    1,
+    1,
+    2,
+    2,
+    3,
+    3,
+    4,
+    4
+   ],
+   "pL": [
+    0.0414,
+    0.0448,
+    0.0968,
+    0.0984,
+    0.1496,
+    0.1574,
+    0.2032,
+    0.2096
+   ],
+   "eps": [
+    0.06620609254251636,
+    0.06290457384957021,
+    0.06948267383042978
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7qqker6oqs73884obg",
+   "basis": "Z",
+   "arm": "qiskit/DD",
+   "rounds": [
+    1,
+    1,
+    2,
+    2,
+    3,
+    3,
+    4,
+    4
+   ],
+   "pL": [
+    0.0292,
+    0.0348,
+    0.0932,
+    0.102,
+    0.167,
+    0.172,
+    0.214,
+    0.237
+   ],
+   "eps": [
+    0.0789828090494537,
+    0.07571472585392036,
+    0.08222571963489722
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7qqker6oqs73884obg",
+   "basis": "Z",
+   "arm": "tournament/DD",
+   "rounds": [
+    1,
+    1,
+    2,
+    2,
+    3,
+    3,
+    4,
+    4
+   ],
+   "pL": [
+    0.0256,
+    0.0272,
+    0.088,
+    0.092,
+    0.156,
+    0.162,
+    0.215,
+    0.2174
+   ],
+   "eps": [
+    0.07572357322109274,
+    0.07262756333348325,
+    0.07879715471510029
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db7qkveil99s73foma1g",
+   "basis": "X",
+   "arm": "qiskit/DD",
+   "rounds": [
+    3
+   ],
+   "pL": [
+    0.4276
+   ],
+   "eps": [
+    0.23744143408036206,
+    NaN,
+    NaN
+   ],
+   "kind": "eps_1pt(F-def) p=0.4276 old_def=0.1697"
+  },
+  {
+   "job": "db7qkveil99s73foma1g",
+   "basis": "X",
+   "arm": "qiskit/noDD",
+   "rounds": [
+    3
+   ],
+   "pL": [
+    0.4982
+   ],
+   "eps": [
+    0.42336905676064435,
+    NaN,
+    NaN
+   ],
+   "kind": "eps_1pt(F-def) p=0.4982 old_def=0.2053"
+  },
+  {
+   "job": "db7qkveil99s73foma1g",
+   "basis": "X",
+   "arm": "tournament/DD",
+   "rounds": [
+    3
+   ],
+   "pL": [
+    0.4062
+   ],
+   "eps": [
+    0.21377057221508589,
+    NaN,
+    NaN
+   ],
+   "kind": "eps_1pt(F-def) p=0.4062 old_def=0.1595"
+  },
+  {
+   "job": "db7qkveil99s73foma1g",
+   "basis": "X",
+   "arm": "tournament/noDD",
+   "rounds": [
+    3
+   ],
+   "pL": [
+    0.4814
+   ],
+   "eps": [
+    0.33308924653359123,
+    NaN,
+    NaN
+   ],
+   "kind": "eps_1pt(F-def) p=0.4814 old_def=0.1966"
+  },
+  {
+   "job": "db7qkveil99s73foma1g",
+   "basis": "Z",
+   "arm": "qiskit/DD",
+   "rounds": [
+    3
+   ],
+   "pL": [
+    0.3954
+   ],
+   "eps": [
+    0.20318177447645336,
+    NaN,
+    NaN
+   ],
+   "kind": "eps_1pt(F-def) p=0.3954 old_def=0.1544"
+  },
+  {
+   "job": "db7qkveil99s73foma1g",
+   "basis": "Z",
+   "arm": "qiskit/noDD",
+   "rounds": [
+    3
+   ],
+   "pL": [
+    0.4771
+   ],
+   "eps": [
+    0.3211076248023579,
+    NaN,
+    NaN
+   ],
+   "kind": "eps_1pt(F-def) p=0.4771 old_def=0.1944"
+  },
+  {
+   "job": "db7qkveil99s73foma1g",
+   "basis": "Z",
+   "arm": "tournament/DD",
+   "rounds": [
+    3
+   ],
+   "pL": [
+    0.3688
+   ],
+   "eps": [
+    0.17989586722336898,
+    NaN,
+    NaN
+   ],
+   "kind": "eps_1pt(F-def) p=0.3688 old_def=0.1422"
+  },
+  {
+   "job": "db7qkveil99s73foma1g",
+   "basis": "Z",
+   "arm": "tournament/noDD",
+   "rounds": [
+    3
+   ],
+   "pL": [
+    0.4501
+   ],
+   "eps": [
+    0.26807538120832686,
+    NaN,
+    NaN
+   ],
+   "kind": "eps_1pt(F-def) p=0.4501 old_def=0.1807"
+  },
+  {
+   "job": "db88kdgr1c5c738lveeg",
+   "basis": "X",
+   "arm": "baseline",
+   "rounds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "pL": [
+    0.046,
+    0.0967,
+    0.156,
+    0.2002
+   ],
+   "eps": [
+    0.06387761173695139,
+    0.060556014762628396,
+    0.06717410196995927
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db88kdgr1c5c738lveeg",
+   "basis": "X",
+   "arm": "compressed",
+   "rounds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "pL": [
+    0.0362,
+    0.0826,
+    0.1315,
+    0.1823
+   ],
+   "eps": [
+    0.05661028731241419,
+    0.05360962009700926,
+    0.0595907838338639
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db88kdgr1c5c738lveeg",
+   "basis": "Z",
+   "arm": "baseline",
+   "rounds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "pL": [
+    0.0308,
+    0.1045,
+    0.1658,
+    0.2271
+   ],
+   "eps": [
+    0.08033803262245254,
+    0.07708231479376909,
+    0.08356868718480598
+   ],
+   "kind": "eps_fit"
+  },
+  {
+   "job": "db88kdgr1c5c738lveeg",
+   "basis": "Z",
+   "arm": "compressed",
+   "rounds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "pL": [
+    0.0222,
+    0.0657,
+    0.1079,
+    0.1445
+   ],
+   "eps": [
+    0.04683339078134491,
+    0.04434017689073422,
+    0.049312962662743653
+   ],
+   "kind": "eps_fit"
+  }
+ ]
+}
