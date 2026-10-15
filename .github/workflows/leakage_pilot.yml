@@ -1,0 +1,55 @@
+name: leakage-pilot
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ibm-qpu
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: pip install -r daily/requirements.txt scipy
+
+      - name: Offline self-test (pilot analysis on simulated IQ)
+        run: python leakage/test_pilot_offline.py
+
+      - name: Check secret
+        env:
+          IBM_QUANTUM_KEY: ${{ secrets.IBM_QUANTUM_KEY }}
+        run: |
+          if [ -z "$IBM_QUANTUM_KEY" ]; then
+            echo "::error::Repository secret IBM_QUANTUM_KEY is not set"; exit 1
+          fi
+
+      - name: Run pre-registered pilot
+        env:
+          IBM_QUANTUM_KEY: ${{ secrets.IBM_QUANTUM_KEY }}
+        run: python leakage/pilot_run.py
+
+      - name: Commit results
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A leakage/pilot_results/ || true
+          if git diff --cached --quiet; then
+            echo "no changes"
+          else
+            git commit -m "leakage pilot: $(date -u +%FT%TZ) results"
+            git pull --rebase
+            git push
+          fi
