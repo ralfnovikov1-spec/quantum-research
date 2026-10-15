@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Heavy-hex Research Update</title>
+<style>
+:root{--ink:#1d2433;--mute:#5b6475;--line:#d9dee7;--soft:#f3f6fa;--ok:#2e7d4f;--bad:#c0392b;--mix:#b7791f;--acc:#2a6fdb}
+@page{size:A4;margin:15mm 14mm}
+body{font-family:"DejaVu Sans",Segoe UI,Arial,sans-serif;color:var(--ink);background:#fff;font-size:10.2pt;line-height:1.45;margin:0}
+h1{font-size:20pt;margin:0 0 4px;line-height:1.2}h2{font-size:13.5pt;margin:18px 0 6px;border-bottom:2px solid var(--acc);padding-bottom:3px}
+h3{font-size:11pt;margin:12px 0 4px}.sub{color:var(--mute);margin:0 0 12px}
+.box{background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:9px 12px;margin:9px 0}
+table{border-collapse:collapse;width:100%;margin:7px 0;font-size:9.2pt}th,td{border:1px solid var(--line);padding:4px 6px;text-align:left;vertical-align:top}th{background:var(--soft)}
+.ok{color:#fff;background:var(--ok);font-weight:bold;text-align:center;white-space:nowrap}.bad{color:#fff;background:var(--bad);font-weight:bold;text-align:center;white-space:nowrap}.mix{color:#fff;background:var(--mix);font-weight:bold;text-align:center;white-space:nowrap}
+.m{color:var(--mute);font-size:8.8pt}code{font-size:8.6pt}.pb{page-break-before:always}ul{margin:4px 0 4px 18px;padding:0}li{margin:2px 0}
+</style></head><body>
+
+<h1>Reset-free syndrome extraction on IBM heavy-hex: replication, pre-registered tests and honest negative results</h1>
+<p class="sub">Research update · 15 October 2026 · Ralf Novikov · code and raw data: github.com/ralfnovikov1-spec/quantum-research ·
+analysis prepared with AI assistance (Claude, Anthropic)</p>
+
+<div class="box"><b>In one paragraph.</b> On IBM's 156-qubit Heron processors, removing mid-circuit resets from heavy-hex
+syndrome extraction lowered the Z-basis logical error per round by about ×1.7 on ibm_kingston, in four runs, each
+2σ-separated. That includes a pre-registered rerun at 10,000 shots. This independently replicates Harper et al. (2025),
+who showed the effect first on ibm_marrakesh. All 9 hardware jobs were re-fetched from IBM and re-derived with
+independent code. Two new ideas were tested on hardware under pre-registration: probe-informed decoding <b>failed</b>, and
+leakage-aware decoding <b>failed</b> to improve the logical error, although leakage-consistent readout events were clearly
+detected. A daily automated study is now running, with three claims fixed in advance.</div>
+
+<h2>1. What holds, what failed</h2>
+<table>
+<tr><th>Claim</th><th>Evidence (hardware unless marked)</th><th>Status</th></tr>
+<tr><td>Removing resets lowers Z-basis logical error per round (d = 3)</td><td>×1.70, ×1.66, ×2.07, ×1.72 on ibm_kingston; 2σ-separated; last run pre-registered, 10,000 shots</td><td class="ok">SUPPORTED</td></tr>
+<tr><td>Same in the X basis</td><td>×1.13–1.42</td><td class="ok">SUPPORTED (smaller)</td></tr>
+<tr><td>Same on ibm_marrakesh</td><td>×1.07 / ×1.05, inside 2σ</td><td class="mix">DIRECTION ONLY</td></tr>
+<tr><td>Break-even (logical outlives best physical qubit)</td><td>0.092× (Z), 0.136× (X), pre-registered</td><td class="bad">NOT REACHED</td></tr>
+<tr><td>A seconds-long live probe makes the noise model accurate</td><td>within ±30% (4/4 arms) vs 1.5–2.1× optimistic from calibration; one day, one chip; decoder caveat (see fix log)</td><td class="mix">SUPPORTED, CAVEAT</td></tr>
+<tr><td>Detectors that over-fire sit on qubits whose readout drifted</td><td>23 qubit sets: ρ = +0.54 [0.17, 0.80], p = 0.009; T1 drift: no detectable association</td><td class="mix">EXPLORATORY → C3 daily</td></tr>
+<tr><td>Probe-informed decoding lowers logical error</td><td>6/16 arms better; 0.69% more errors; p = 0.999 (pre-registered D1–D3)</td><td class="bad">FAILED</td></tr>
+<tr><td>Leakage visible in analog (IQ) readout</td><td>persistent off-axis events, ratio 105, p ≈ 10⁻¹⁸⁶, 12/14 ancillas (pre-registered L0)</td><td class="ok">DETECTED</td></tr>
+<tr><td>Leakage-aware decoding lowers logical error</td><td>3338 → 3394 errors (+1.7%); persistent-flag variant neutral (post hoc)</td><td class="bad">FAILED</td></tr>
+<tr><td>Larger codes help (Λ &gt; 1)</td><td>only d = 3 run on hardware</td><td class="mix">NOT TESTED</td></tr>
+</table>
+
+<h2>2. Prior work and what is not new</h2>
+<p>Reset elimination on heavy-hex was published first by <b>Harper et al.</b>, arXiv:2504.07258, <i>Nature Communications</i> 17,
+5039 (2026): ibm_marrakesh, d = 3, 96–97% per-round fidelity with a shorter circuit. Reset-free extraction was analysed in
+simulation by Gehér et al. (arXiv:2408.00758). IBM's 2022 heavy-hex experiment is arXiv:2203.07205. Soft-information
+decoding on IBM hardware: arXiv:2411.16228. Noise-aware decoding: arXiv:2502.21044, 2406.02700. Leakage detection with
+analog readout: Varbanov et al., npj QI 2020. This work is an <b>independent replication</b> on another chip with IBM's
+original flag-qubit circuit, plus the tests listed above. Novelty claims rest on targeted searches, not a full review.</p>
+
+<h2>3. Hardware runs (all retrievable by job ID)</h2>
+<table>
+<tr><th>Date</th><th>Job</th><th>Chip</th><th>What</th><th>QPU s</th></tr>
+<tr><td>14 Oct</td><td>db7r4per…, db7rf1gr…, db7s2dar…, db7rbner…</td><td>kingston / marrakesh</td><td>reset-free vs baseline runs 1–3 + Marrakesh</td><td>25–36 each</td></tr>
+<tr><td>14 Oct</td><td>db7qkvei…, db7qqker…, db7rid8r…, db7s4t6r…</td><td>marrakesh / kingston</td><td>DD, placement, probe, break-even</td><td>19–47 each</td></tr>
+<tr><td>15 Oct</td><td>db88jo6r… + db88kdgr…</td><td>kingston</td><td>live probe + pre-registered rerun (30 circuits × 10k)</td><td>99 (main)</td></tr>
+<tr><td>15 Oct</td><td>db8a5aer…</td><td>kingston</td><td>daily study, day 1</td><td>≈ 35 (incl. probe)</td></tr>
+<tr><td>15 Oct</td><td>db8clieil…</td><td>kingston</td><td>pre-registered leakage pilot, kerneled IQ</td><td>9</td></tr>
+</table>
+
+<h2 class="pb">4. Fix log (everything that was corrected)</h2>
+<h3>Report corrections (14 Oct → 15 Oct)</h3>
+<ul>
+<li>Eight pre-registered predictions that had failed are now marked FAILS (P3, P4, P6, P10, P13, P15, P16, P19). Some had been
+shown as "Mixed" or not mentioned.</li>
+<li>The 14 Oct break-even "pass" was obtained after excluding a dead qubit (q146) post hoc. It is now labelled that way and was
+retested cleanly with a dead-qubit filter applied before selection.</li>
+<li>Dynamical-decoupling table: the arms without DD were saturated (45–50% error after 3 rounds), so the ×1.21–1.27 magnitude
+was withdrawn. The per-round metric there differed from the rest of the report.</li>
+<li>Added shot counts and sources for every number. The "Λ &lt; 1 on hardware" claim was withdrawn (never run at d = 5).</li>
+</ul>
+<h3>Independent code and physics reviews</h3>
+<ul>
+<li>The re-derivation script merged two DD arm types; fixed. All 8 arms then reproduce, including P6 = 7.48%.</li>
+<li>Break-even lifetime model: a review concern (2.6× error) was checked against the exact DD pulse-sequence model. The
+original fit was within about 5%, and the Z ratio was corrected from 0.096× to 0.092×.</li>
+<li>The probe-model prediction had been decoded with its own noise model instead of the calibration decoder used on the
+hardware data. This was fixed for all future runs, and the 15 Oct result is caveated.</li>
+<li>Daily pipeline: no same-day resubmission; plan saved before submission; budget guard fails closed; per-day error records;
+results always committed. The protocol was bumped to v2 before any daily result.</li>
+</ul>
+<h3>False positives caught by simulation before hardware</h3>
+<ul>
+<li>Noise spectroscopy: a "≥ 60% of qubits" rule passed on pure white noise. It was replaced with a sign test plus effect size,
+giving 0/20 false positives.</li>
+<li>A Ramsey measured only in X gave <b>10/10 false positives</b> under static frequency offsets. It is now X+Y magnitude with
+per-qubit readout correction, giving 0/20 with confounds (offsets, ZZ, asymmetric readout).</li>
+<li>Leakage decoding: readout-only erasure <i>hurts</i> once leakage spreads to neighbours, so the neighbour-aware decoder was
+built. False-flag cost was quantified, and a binomial persistence test now gates the flags.</li>
+</ul>
+<h3>Audit of earlier exploratory notebooks</h3>
+<p>31 earlier simulation notebooks were audited, fixed and re-run. Several headline effects turned out to be implementation
+bugs: a reservoir that reset every step; an 8-bit integer overflow; a non-Hermitian Hamiltonian; integrator norm drift; and
+hard-coded "CONFIRMED" strings. With the bugs fixed, those claims were withdrawn. Correct reproductions of known physics
+remained, for example the toric-code threshold at 10.38% against about 10.3% in the literature. These notebooks are not
+published.</p>
+
+<h2>5. Running now: pre-registered daily study</h2>
+<p>A GitHub Action runs every day on IBM hardware, alternating ibm_kingston and ibm_marrakesh. It probes all qubits, runs
+baseline and reset-free arms, and publishes <code>daily/RESULTS.md</code>. Claims fixed before any data:</p>
+<ul>
+<li>C1: the calibration-fed model is at least 2× less accurate than the probe-fed model on at least 80% of days.</li>
+<li>C2: the reset-free Z gain is 2σ-separated on at least 80% of days.</li>
+<li>C3: detector excess tracks readout drift on at least 60% of days.</li>
+</ul>
+<p>No verdict before 20 analysed days.</p>
+
+<h2>6. Limitations and next steps</h2>
+<ul><li>Distance 3 only. A matching decoder only. Few days per chip. IBM open-plan budget: 600 s of QPU per month.</li>
+<li>The leakage events could not be calibrated (|2⟩ cannot be prepared on Heron), so no leakage <i>rate</i> is claimed.</li>
+<li>Next: let the daily study reach 20 days. If more QPU time becomes available, test whether leakage accumulates over many
+rounds (pre-registered), and run noise spectroscopy on hardware.</li></ul>
+<p class="m">All claims are traceable to files in the repository. Simulations are labelled as such and say nothing about hardware.</p>
+</body></html>
