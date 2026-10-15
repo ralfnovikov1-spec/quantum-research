@@ -106,7 +106,7 @@ cells = [
          "V = N.verdicts(fits)\n"
          "for k, (ok, txt) in V.items():\n"
          "    print(k, \"HOLDS\" if ok else \"FAILS\", \"-\", txt, \"|\", plan[\"predictions\"][k])\n"
-         "med = {s: float(np.nanmedian([fits[q][s][0] for q in fits])) for s in N.SEQS}\n"
+         "med = {s: float(np.nanmedian([fits[q][s][0] for q in fits])) for s in N.FITTED}\n"
          "print(\"median T (us):\", {s: round(v) for s, v in med.items()})\n"
          "print(\"QPU seconds used:\", job.usage())\n"
          "plan[\"result\"] = {\"verdicts\": {k: [bool(a), b] for k, (a, b) in V.items()},\n"
