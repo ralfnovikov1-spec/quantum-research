@@ -1,0 +1,158 @@
+{
+ "no leakage (control)": {
+  "total": {
+   "hard": 20162,
+   "erasure": 20160,
+   "erasure+N": 20237
+  },
+  "mcnemar": {
+   "erasure": [
+    17,
+    15
+   ],
+   "erasure+N": [
+    77,
+    152
+   ]
+  },
+  "per_arm": {
+   "Z/baseline": {
+    "hard": 5893,
+    "erasure": 5893,
+    "erasure+N": 5901
+   },
+   "Z/reset-free": {
+    "hard": 3500,
+    "erasure": 3498,
+    "erasure+N": 3507
+   },
+   "X/baseline": {
+    "hard": 5838,
+    "erasure": 5838,
+    "erasure+N": 5881
+   },
+   "X/reset-free": {
+    "hard": 4931,
+    "erasure": 4931,
+    "erasure+N": 4948
+   }
+  }
+ },
+ "0.3% leakage, invisible (control)": {
+  "total": {
+   "hard": 22277,
+   "erasure": 22276,
+   "erasure+N": 22360
+  },
+  "mcnemar": {
+   "erasure": [
+    17,
+    16
+   ],
+   "erasure+N": [
+    81,
+    164
+   ]
+  },
+  "per_arm": {
+   "Z/baseline": {
+    "hard": 6329,
+    "erasure": 6329,
+    "erasure+N": 6337
+   },
+   "Z/reset-free": {
+    "hard": 3949,
+    "erasure": 3950,
+    "erasure+N": 3962
+   },
+   "X/baseline": {
+    "hard": 6428,
+    "erasure": 6429,
+    "erasure+N": 6466
+   },
+   "X/reset-free": {
+    "hard": 5571,
+    "erasure": 5568,
+    "erasure+N": 5595
+   }
+  }
+ },
+ "0.3% leakage, visible": {
+  "total": {
+   "hard": 22269,
+   "erasure": 22304,
+   "erasure+N": 21535
+  },
+  "mcnemar": {
+   "erasure": [
+    1359,
+    1394
+   ],
+   "erasure+N": [
+    2254,
+    1520
+   ]
+  },
+  "per_arm": {
+   "Z/baseline": {
+    "hard": 6326,
+    "erasure": 6253,
+    "erasure+N": 6116
+   },
+   "Z/reset-free": {
+    "hard": 3948,
+    "erasure": 3897,
+    "erasure+N": 3695
+   },
+   "X/baseline": {
+    "hard": 6432,
+    "erasure": 6525,
+    "erasure+N": 6310
+   },
+   "X/reset-free": {
+    "hard": 5563,
+    "erasure": 5629,
+    "erasure+N": 5414
+   }
+  }
+ },
+ "1% leakage, visible": {
+  "total": {
+   "hard": 26834,
+   "erasure": 26884,
+   "erasure+N": 24577
+  },
+  "mcnemar": {
+   "erasure": [
+    4101,
+    4151
+   ],
+   "erasure+N": [
+    6643,
+    4386
+   ]
+  },
+  "per_arm": {
+   "Z/baseline": {
+    "hard": 7214,
+    "erasure": 7024,
+    "erasure+N": 6560
+   },
+   "Z/reset-free": {
+    "hard": 4945,
+    "erasure": 4779,
+    "erasure+N": 4207
+   },
+   "X/baseline": {
+    "hard": 7784,
+    "erasure": 7939,
+    "erasure+N": 7324
+   },
+   "X/reset-free": {
+    "hard": 6891,
+    "erasure": 7142,
+    "erasure+N": 6486
+   }
+  }
+ }
+}
