@@ -1,0 +1,10 @@
+no leakage (control)               hard  20162 | erasure  20160 (-0.0%, p_better=4.3e-01) | erasure+N  20237 (+0.4%, p_better=1.0e+00)
+      Z/baseline     hard  5893  erasure  5893  erasure+N  5901
+      Z/reset-free   hard  3500  erasure  3498  erasure+N  3507
+      X/baseline     hard  5838  erasure  5838  erasure+N  5881
+      X/reset-free   hard  4931  erasure  4931  erasure+N  4948
+0.3% leakage, invisible (control)  hard  22277 | erasure  22276 (-0.0%, p_better=5.0e-01) | erasure+N  22360 (+0.4%, p_better=1.0e+00)
+      Z/baseline     hard  6329  erasure  6329  erasure+N  6337
+      Z/reset-free   hard  3949  erasure  3950  erasure+N  3962
+      X/baseline     hard  6428  erasure  6429  erasure+N  6466
+      X/reset-free   hard  5571  erasure  5568  erasure+N  5595
