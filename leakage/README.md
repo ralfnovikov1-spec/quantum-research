@@ -1,4 +1,4 @@
-# Leakage-aware decoding for reset-free heavy-hex (work in progress — SIMULATION ONLY so far)
+# Leakage-aware decoding for reset-free heavy-hex
 
 **Question:** on IBM Heron, a "reset" is a measurement plus a conditional X, so neither the baseline nor the
 reset-free schedule clears a leaked (|2⟩) ancilla. Can leaked ancillas be seen in the analog (kerneled IQ)
@@ -24,4 +24,7 @@ leakage-aware decoding on the heavy-hex code. That is not a full review.
 - Controls: no leakage, or leakage invisible in IQ, gives no gain.
 
 **Leakage rates used (0.3%, 1% per measurement) and the neighbour model are assumptions, not IBM measurements.**
-Next: a pre-registered hardware pilot (kerneled readout) to measure whether leakage is visible at all.
+**Hardware pilot (15 Oct 2026): see [PILOT_RESULT.md](PILOT_RESULT.md).** L0 holds: persistent off-axis
+readout events consistent with leakage were seen on ibm_kingston (ratio 105, p ≈ 10⁻¹⁸⁶). L1 fails: the
+leakage-aware decoder did not lower the logical error, because the events are rare (about 0.06% of
+measurements) compared with false flags.

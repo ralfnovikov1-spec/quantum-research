@@ -76,6 +76,8 @@ microscopic origin of the noise, magnetic or otherwise.
 | `05_audit/` | Audit of the author's earlier exploratory notebooks (not published here), with recomputation scripts |
 | `daily/` | Daily study: protocol, code, data, results |
 | `noise_spectroscopy/` | Noise-spectroscopy analysis, simulator, simulation power test, Colab notebooks |
+| `probe_decoding/` | Pre-registered test of probe-informed decoding on hardware data: **failed** |
+| `leakage/` | Leakage-aware decoding: simulators, kerneled-IQ pipeline, pre-registered hardware pilot (L0 holds, L1 fails) |
 
 ## Reproduce
 
