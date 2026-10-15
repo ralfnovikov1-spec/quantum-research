@@ -34,9 +34,18 @@ Either way, the pre-registered band check P19 (0.10–0.35) fails.
 The full list of 21 pre-registered predictions, including the 8 that failed, is in the
 [corrected report](01_reports/heavy-hex_report_CORRECTED_2026-10-15.pdf).
 
-Prior work: Gehér et al., *To reset, or not to reset* (arXiv:2408.00758) studied reset-free extraction
-in simulation. IBM's 2022 heavy-hex experiment is arXiv:2203.07205. This repository adds a replicated
-hardware measurement, not a new theory. No full literature review has been done.
+**Prior work, and what is not new here.** Removing ancilla resets from heavy-hex syndrome extraction on IBM
+Heron hardware was published first by Harper et al., *Characterising the failure mechanisms of
+error-corrected quantum logic gates*, arXiv:2504.07258 (April 2025), *Nature Communications* 17, 5039
+(2026). They used ibm_marrakesh at d = 3, a lower-depth circuit (3.2 µs per round) and reported 96–97%
+per-round fidelity. Gehér et al., *To reset, or not to reset* (arXiv:2408.00758), analysed reset-free
+extraction in simulation. IBM's 2022 heavy-hex experiment is arXiv:2203.07205.
+
+This repository is an **independent replication** on another chip (`ibm_kingston`) with IBM's original
+flag-qubit circuit, plus a pre-registered rerun, raw-data re-derivation and a live-probe analysis. Noise-aware
+decoding with live noise estimates is also established (e.g. arXiv:2502.21044, arXiv:2406.02700).
+The per-detector readout-drift association (C3) was not found in a targeted literature search, but no
+full review has been done.
 
 ## Live daily study (automated)
 
