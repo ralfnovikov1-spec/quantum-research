@@ -269,12 +269,26 @@ def report(out_dir=HERE):
 MIN_DAYS = 20
 
 
+def ibm_key():
+    """IBM_QUANTUM_KEY may hold the bare key, a quoted key, or the JSON
+    file IBM lets you download ({"apikey": "..."}). Never printed."""
+    raw = os.environ["IBM_QUANTUM_KEY"].strip()
+    if raw.startswith("{"):
+        d = json.loads(raw)
+        for k in ("apikey", "api_key", "apiKey", "token", "key"):
+            if k in d:
+                return str(d[k]).strip()
+        raise SystemExit("IBM_QUANTUM_KEY is JSON without an apikey field "
+                         "(fields: %s)" % sorted(d))
+    return raw.strip("\"' ").strip()
+
+
 def main():
     mode = sys.argv[1] if len(sys.argv) > 1 else "run"
     if mode == "run":
         from qiskit_ibm_runtime import QiskitRuntimeService, SamplerV2
         svc = QiskitRuntimeService(channel="ibm_quantum_platform",
-                                   token=os.environ["IBM_QUANTUM_KEY"])
+                                   token=ibm_key())
         collect(svc)
         submit(svc, SamplerV2)
         report()
