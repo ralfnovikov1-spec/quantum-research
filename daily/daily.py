@@ -42,6 +42,10 @@ def plan_day(hw, live, probe_id, cal_stale):
            "shots": SHOTS, "probe_job": probe_id,
            "date": datetime.date.today().isoformat(),
            "excluded": sorted(bad), "stale_t1_half": cal_stale,
+           "live": {str(q): {k: live[q][k] for k in ("t1", "t2", "ro")}
+                    for q in live},
+           "cal": {str(q): {"t1": chip.noise.t1(q), "t2": chip.noise.t2(q),
+                            "ro": chip.noise.ro(q)} for q in live},
            "arms": [], "pred": {}}
     pubs = []
     for basis in ("Z", "X"):

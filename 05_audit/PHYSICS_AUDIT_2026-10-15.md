@@ -1,6 +1,6 @@
 # Physics audit of all Colab notebooks — 15 Oct 2026
 
-Scope: 32 exploratory notebooks from the author's Colab workspace (not published in this repository). Read-only;
+Scope: 31 exploratory notebooks from the author's Colab workspace (not published in this repository). Read-only;
 nothing was run against IBM. "Recomputed" = re-derived offline (`check_scripts/`); everything
 else is quoted from the notebooks' own saved outputs. Two severe claims were re-checked by hand
 (crystal_quantum "127.000" output; Nisq9 `unitary_step` restarting from |0…0⟩) — both confirmed.
@@ -26,7 +26,6 @@ else is quoted from the notebooks' own saved outputs. Two severe claims were re-
 | hybrid_qubit | "autonomous QEC" qubit–qutrit | INVALID-PHYSICS (not a QEC model) |
 | Chrono_thermodynamic | Maxwell demon, scars, time crystal | INVALID-PHYSICS (Landauer cost missing, sweep-edge "thresholds") |
 | Nisq5, Nisq6, Nisq7, MIET | MIPT scans | exploratory, no claims (Nisq7/MIET share the reset bug) |
-| migren | migraine "trial" on synthetic data | not physics; circular synthetic trial |
 | quantum | empty | — |
 
 ## Defects, most severe first (fix in brackets)
@@ -44,7 +43,7 @@ else is quoted from the notebooks' own saved outputs. Two severe claims were re-
 11. **Entropy_phase_3** — "Arrow of Time CONFIRMED" KL is set by the smoothing constant (0.91 → 0.39 → 0.19 as α goes 1e-10 → 1e-3 → 0.5, recomputed); entropy rate ~20× the Lorenz λ₁; c2/c4 test identities (ΔH ≡ 0).
 12. **Nisq4 c10–12** — scaling collapse uses pasted arrays and an interpolation grid far outside the data; "ν = 2.43" not meaningful.
 13. **book_3 c2** — threshold from 200 trials (~0.5σ difference); the 0.103 line is hardcoded.
-14. Smaller: IG_quantum (η=0 "causal control", wrong variational equation); Hydrodynamic_memory (⟨σx⟩ of a σz eigenstate ≡ 0 → identical τ at every ε); quantum_memory_2 (cascaded Lindbladian missing the cascaded Hamiltonian term); Hardware1 (classical ODE presented as quantum/"Mind", hardcoded "confirmed"); aethel (Z errors applied right before Z measurement → no effect); migren (circular synthetic trial).
+14. Smaller: IG_quantum (η=0 "causal control", wrong variational equation); Hydrodynamic_memory (⟨σx⟩ of a σz eigenstate ≡ 0 → identical τ at every ε); quantum_memory_2 (cascaded Lindbladian missing the cascaded Hamiltonian term); Hardware1 (classical ODE presented as quantum/"Mind", hardcoded "confirmed"); aethel (Z errors applied right before Z measurement → no effect).
 
 ## What is sound and worth keeping
 Qmem noiseless self-test (c4), Stim noise self-test (c22), T2 ≤ 2·T1 clamp; Q_storage 16-case noiseless self-test (c11); book_3 c0–1; honest null results in Chrono c5, quantum_memory_2 c1 ("NO-GO"), Quantum_energy c7/c13/c20/c21.
