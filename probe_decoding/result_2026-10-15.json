@@ -1,0 +1,176 @@
+{
+ "rows": [
+  {
+   "basis": "Z",
+   "variant": "baseline",
+   "rounds": 1,
+   "readouts_replaced": 27,
+   "err_cal": 308,
+   "err_probe": 315,
+   "probe_fixes": 11,
+   "probe_breaks": 18
+  },
+  {
+   "basis": "Z",
+   "variant": "compressed",
+   "rounds": 1,
+   "readouts_replaced": 27,
+   "err_cal": 222,
+   "err_probe": 222,
+   "probe_fixes": 0,
+   "probe_breaks": 0
+  },
+  {
+   "basis": "Z",
+   "variant": "compressed",
+   "rounds": 2,
+   "readouts_replaced": 45,
+   "err_cal": 657,
+   "err_probe": 653,
+   "probe_fixes": 12,
+   "probe_breaks": 8
+  },
+  {
+   "basis": "Z",
+   "variant": "baseline",
+   "rounds": 2,
+   "readouts_replaced": 45,
+   "err_cal": 1045,
+   "err_probe": 1032,
+   "probe_fixes": 15,
+   "probe_breaks": 2
+  },
+  {
+   "basis": "Z",
+   "variant": "baseline",
+   "rounds": 3,
+   "readouts_replaced": 63,
+   "err_cal": 1658,
+   "err_probe": 1655,
+   "probe_fixes": 8,
+   "probe_breaks": 5
+  },
+  {
+   "basis": "Z",
+   "variant": "compressed",
+   "rounds": 3,
+   "readouts_replaced": 63,
+   "err_cal": 1079,
+   "err_probe": 1071,
+   "probe_fixes": 17,
+   "probe_breaks": 9
+  },
+  {
+   "basis": "Z",
+   "variant": "compressed",
+   "rounds": 4,
+   "readouts_replaced": 81,
+   "err_cal": 1445,
+   "err_probe": 1424,
+   "probe_fixes": 43,
+   "probe_breaks": 22
+  },
+  {
+   "basis": "Z",
+   "variant": "baseline",
+   "rounds": 4,
+   "readouts_replaced": 81,
+   "err_cal": 2271,
+   "err_probe": 2275,
+   "probe_fixes": 3,
+   "probe_breaks": 7
+  },
+  {
+   "basis": "X",
+   "variant": "baseline",
+   "rounds": 1,
+   "readouts_replaced": 27,
+   "err_cal": 460,
+   "err_probe": 466,
+   "probe_fixes": 8,
+   "probe_breaks": 14
+  },
+  {
+   "basis": "X",
+   "variant": "compressed",
+   "rounds": 1,
+   "readouts_replaced": 27,
+   "err_cal": 362,
+   "err_probe": 377,
+   "probe_fixes": 34,
+   "probe_breaks": 49
+  },
+  {
+   "basis": "X",
+   "variant": "compressed",
+   "rounds": 2,
+   "readouts_replaced": 45,
+   "err_cal": 826,
+   "err_probe": 868,
+   "probe_fixes": 61,
+   "probe_breaks": 103
+  },
+  {
+   "basis": "X",
+   "variant": "baseline",
+   "rounds": 2,
+   "readouts_replaced": 45,
+   "err_cal": 967,
+   "err_probe": 998,
+   "probe_fixes": 48,
+   "probe_breaks": 79
+  },
+  {
+   "basis": "X",
+   "variant": "baseline",
+   "rounds": 3,
+   "readouts_replaced": 63,
+   "err_cal": 1560,
+   "err_probe": 1559,
+   "probe_fixes": 92,
+   "probe_breaks": 91
+  },
+  {
+   "basis": "X",
+   "variant": "compressed",
+   "rounds": 3,
+   "readouts_replaced": 63,
+   "err_cal": 1315,
+   "err_probe": 1342,
+   "probe_fixes": 83,
+   "probe_breaks": 110
+  },
+  {
+   "basis": "X",
+   "variant": "compressed",
+   "rounds": 4,
+   "readouts_replaced": 81,
+   "err_cal": 1823,
+   "err_probe": 1838,
+   "probe_fixes": 138,
+   "probe_breaks": 153
+  },
+  {
+   "basis": "X",
+   "variant": "baseline",
+   "rounds": 4,
+   "readouts_replaced": 81,
+   "err_cal": 2002,
+   "err_probe": 2030,
+   "probe_fixes": 113,
+   "probe_breaks": 141
+  }
+ ],
+ "mcnemar": [
+  686,
+  811,
+  0.9994396102799314
+ ],
+ "arms_better": 6,
+ "reduction": -0.006944444444444444,
+ "verdicts": {
+  "D1": false,
+  "D2": false,
+  "D3": false
+ }
+}
