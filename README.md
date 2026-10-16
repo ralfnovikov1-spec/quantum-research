@@ -7,8 +7,9 @@ extraction lower the logical error per round?
 **Provenance.** Every hardware error rate, gain and lifetime here is re-derived from IBM's stored raw
 results by independent code: [`04_hardware_runs/verify_hw.py`](04_hardware_runs/verify_hw.py) produces
 [`INDEPENDENT_REDERIVATION.json`](04_hardware_runs/INDEPENDENT_REDERIVATION.json) and covers all 9 jobs.
-The verdict texts of the 14 Oct predictions P1–P16 are quoted from the original Colab notebook, which is
-not published. Every simulation number is labelled SIMULATION.
+The verdict texts of the 14 Oct predictions P1–P16 are quoted from the original Colab notebook,
+[`02_notebooks_colab/Qmem2_heavy_hex_reset_free.ipynb`](02_notebooks_colab/Qmem2_heavy_hex_reset_free.ipynb),
+published with its outputs. Every simulation number is labelled SIMULATION.
 
 ## Results (hardware, d = 3)
 
@@ -68,12 +69,13 @@ microscopic origin of the noise, magnetic or otherwise.
 | Path | Content |
 |---|---|
 | `01_reports/` | Corrected report (PDF + HTML). It supersedes an earlier version that had post-hoc and unlabelled failures. |
+| `02_notebooks_colab/` | The Colab notebooks the hardware jobs were submitted from, published as run with outputs: `Qmem2` (heavy-hex, this README's results), `Qmem1` (earlier study) and its audited `Qmem1_fixed` version. Keys come from Colab Secrets; see its README. |
 | `03_code_hhmem/hhmem.py` | Heavy-hex subsystem code builder, GF(2) detector repair, Stim noise model, zero-SWAP placement, X–X DD, decoding |
 | `03_code_hhmem/hhmem2.py` | Live probe, dead-qubit filter (applied before selection), pre-registration with timestamp and SHA-256, verdicts |
 | `03_code_hhmem/dry_run.py` | End-to-end test on `FakeKingston` with an injected dead qubit; includes a control run with the filter disabled |
 | `03_code_hhmem/Qmem3.ipynb` | Colab notebook used for the 15 Oct 2026 pre-registered rerun |
 | `04_hardware_runs/` | Plans (circuits, detectors, layouts) for every job, probe data, the rerun's pre-registration and verdicts, `verify_hw.py`, `recompute_breakeven.py`, `detector_drift.py` |
-| `05_audit/` | Audit of the author's earlier exploratory notebooks (not published here), with recomputation scripts |
+| `05_audit/` | Audit of the author's earlier exploratory notebooks (`02_notebooks_colab/Qmem1_*`), with recomputation scripts |
 | `daily/` | Daily study: protocol, code, data, results |
 | `noise_spectroscopy/` | Noise-spectroscopy analysis, simulator, simulation power test, Colab notebooks |
 | `probe_decoding/` | Pre-registered test of probe-informed decoding on hardware data: **failed** |
